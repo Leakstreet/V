@@ -36,6 +36,7 @@ function module:Auth(config)
 	config.Description = config.Description or "Key System";
 	config.OnLogIn = config.OnLogIn or function() end;
 	config.OnGetKey = config.OnGetKey or function() end;
+	config.OnGetKey1 = config.OnGetKey1 or function() end;
 	
 	local ScreenGui = Instance.new("ScreenGui")
 	local MainFrame = Instance.new("Frame")
@@ -388,11 +389,44 @@ function module:Auth(config)
 	TextLabel_2.Position = UDim2.new(0.5, 0, 0.5, 0)
 	TextLabel_2.Size = UDim2.new(1, -10, 1, -10)
 	TextLabel_2.Font = Enum.Font.GothamMedium
-	TextLabel_2.Text = "Get Key"
+	TextLabel_2.Text = "Get Key (Linkvertise)"
 	TextLabel_2.TextColor3 = Color3.fromRGB(255, 255, 255)
 	TextLabel_2.TextSize = 14.000
 	TextLabel_2.TextTransparency = 1
 	TextLabel_2.ZIndex = 3
+	
+	GetAccount2.Name = "GetAccount2"
+	GetAccount2.Parent = MainFrame
+	GetAccount2.AnchorPoint = Vector2.new(0.5, 0)
+	GetAccount2.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
+	GetAccount2.BackgroundTransparency = 1
+	GetAccount2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	GetAccount2.BorderSizePixel = 0
+	GetAccount2.Position = UDim2.new(0.5, 0, 0.250999987 + 0.15, 70)
+	GetAccount2.Size = UDim2.new(0.5, -30, 0, 30)
+	GetAccount2.ZIndex = 2;
+	
+	UICorner_6.CornerRadius = UDim.new(0, 3)
+	UICorner_6.Parent = GetAccount2
+
+	UIStroke_4.Transparency = 1
+	UIStroke_4.Color = Color3.fromRGB(65, 65, 65)
+	UIStroke_4.Parent = GetAccount2
+	
+	TextLabel_3.Parent = GetAccount2
+	TextLabel_3.AnchorPoint = Vector2.new(0.5, 0.5)
+	TextLabel_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextLabel_3.BackgroundTransparency = 1.000
+	TextLabel_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	TextLabel_2.BorderSizePixel = 0
+	TextLabel_3.Position = UDim2.new(0.5, 0, 0.5, 0)
+	TextLabel_3.Size = UDim2.new(1, -10, 1, -10)
+	TextLabel_3.Font = Enum.Font.GothamMedium
+	TextLabel_3.Text = "Get Key (Lootlabs)"
+	TextLabel_3.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TextLabel_3.TextSize = 14.000
+	TextLabel_3.TextTransparency = 1
+	TextLabel_3.ZIndex = 3
 	
 	toggle_ui(true);
 	
@@ -443,53 +477,41 @@ function module:Auth(config)
 		end);
 	end;
 	
-	-- Botón Get Key 1 (Linkvertise)
 	do
-		local AccountButton1 = module:NewInput(GetAccount, function()
-			if config.OnGetKey then
-				config.OnGetKey(tbl);
-			end
+		local AccountButton = module:NewInput(GetAccount,function()
+			config.OnGetKey(tbl);
 		end)
 
-		AccountButton1.MouseEnter:Connect(function()
-			module:CreateAnimation(GetAccount, 0.35, nil, {
+		AccountButton.MouseEnter:Connect(function()
+			module:CreateAnimation(GetAccount,0.35,nil,{
 				BackgroundColor3 = Color3.fromRGB(85, 85, 85)
 			});
-		end)
+		end);
 
-		AccountButton1.MouseLeave:Connect(function()
-			module:CreateAnimation(GetAccount, 0.35, nil, {
+		AccountButton.MouseLeave:Connect(function()
+			module:CreateAnimation(GetAccount,0.35,nil,{
 				BackgroundColor3 = Color3.fromRGB(39, 39, 39)
 			});
-		end)
-	end
+		end);
+	end;
+	
+	do
+	local AccountButton2 = module:NewInput(GetAccount2,function()
+		config.OnGetKey1(tbl);
+	end)
 
-	-- Botón Get Key 2 (Lootlabs)
-	local GetAccount2 = GetAccount:Clone()
-	GetAccount2.Name = "GetAccount2"
-	GetAccount2.Position = UDim2.new(0.5, 15, 0.250999987, 70)
-	GetAccount2.Parent = MainFrame
-
-	local TextLabel_3 = GetAccount2.TextLabel:Clone()
-	TextLabel_3.Text = "Get Key 2"
-	TextLabel_3.Parent = GetAccount2
-
-	module:NewInput(GetAccount2, function()
-		if config.OnGetKey1 then
-			config.OnGetKey1(tbl);
-		end
-	end).MouseEnter:Connect(function()
-		module:CreateAnimation(GetAccount2, 0.35, nil, {
+	AccountButton2.MouseEnter:Connect(function()
+		module:CreateAnimation(GetAccount2,0.35,nil,{
 			BackgroundColor3 = Color3.fromRGB(85, 85, 85)
 		});
-	end)
+	end);
 
-	GetAccount2.MouseLeave:Connect(function()
-		module:CreateAnimation(GetAccount2, 0.35, nil, {
+	AccountButton2.MouseLeave:Connect(function()
+		module:CreateAnimation(GetAccount2,0.35,nil,{
 			BackgroundColor3 = Color3.fromRGB(39, 39, 39)
 		});
-	end)
-
+	end);
+	end;
 	
 	function tbl:Await()
 		tbl.Event.Event:Wait()
