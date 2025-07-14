@@ -8345,7 +8345,7 @@ function Compkiller.new(Config : Window)
 	Config.Name = config.WindowName
 	WindowArgs.Profile = config.UserProfile
 end;
-
+print('d')
 
 	WindowArgs.LOOP_THREAD = task.spawn(function()
 		local TimeTic = tick();
