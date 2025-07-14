@@ -8317,28 +8317,35 @@ function Compkiller.new(Config : Window)
 			end;
 		end);
 	end;
-
+	
 	function WindowArgs:Update(config: WindowUpdate)
-		config = config or {};
-		config.Logo = config.Logo or Config.Logo;
-		config.Username = config.Username or LocalPlayer.DisplayName;
-		config.ExpireDate = config.ExpireDate or "NEVER";
-		config.WindowName = config.WindowName or Config.Name;
-		config.UserProfile = config.UserProfile or string.format("rbxthumb://type=AvatarHeadShot&id=%s&w=150&h=150",tostring(LocalPlayer.UserId));
+	config = config or {}
 
-		UserText.Text = config.Username;
-		CompLogo.Image = config.Logo;
-		ExpireText.Text = config.ExpireDate;
-		WindowLabel.Text = config.WindowName;
-		UserProfile.Image = config.UserProfile;
-		WindowArgs.Username = config.Username;
+	local discordName = typeof(LRM_DiscordUsername) == "string" and LRM_DiscordUsername or nil
+	local discordAvatar = typeof(LRM_DiscordAvatar) == "string" and LRM_DiscordAvatar or nil
 
-		Config.Logo = config.Logo or Config.Logo;
-		WindowArgs.Username = config.Username or WindowArgs.Username;
-		WindowArgs.ExipreDate = config.ExpireDate or WindowArgs.ExipreDate;
-		Config.Name = config.WindowName or Config.Name;
-		WindowArgs.Profile = config.UserProfile or WindowArgs.Profile;
-	end;
+	local robloxName = LocalPlayer.DisplayName
+	local robloxAvatar = string.format("rbxthumb://type=AvatarHeadShot&id=%s&w=150&h=150", tostring(LocalPlayer.UserId))
+
+	config.Username = config.Username or discordName or robloxName
+	config.UserProfile = config.UserProfile or discordAvatar or robloxAvatar
+	config.Logo = config.Logo or Config.Logo
+	config.ExpireDate = config.ExpireDate or "NEVER"
+	config.WindowName = config.WindowName or Config.Name
+
+	UserText.Text = config.Username
+	CompLogo.Image = config.Logo
+	ExpireText.Text = config.ExpireDate
+	WindowLabel.Text = config.WindowName
+	UserProfile.Image = config.UserProfile
+
+	Config.Logo = config.Logo
+	WindowArgs.Username = config.Username
+	WindowArgs.ExipreDate = config.ExpireDate
+	Config.Name = config.WindowName
+	WindowArgs.Profile = config.UserProfile
+end;
+
 
 	WindowArgs.LOOP_THREAD = task.spawn(function()
 		local TimeTic = tick();
